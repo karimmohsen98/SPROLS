@@ -1,0 +1,4 @@
+package sprols.internship.Services;
+
+public interface CongeService {
+}
