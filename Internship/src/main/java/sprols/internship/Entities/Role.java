@@ -7,29 +7,20 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Materiel implements Serializable{
+@Entity
 
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMateriel;
-
-
-    @NotNull
-    @Column(nullable = false)
-    private String nomMateriel;
+    private int idRole;
 
     @NotNull
     @Column(nullable = false)
-    private int quantiteDemande;
-
-    @Null
-    private int quantiteApprovisionne;
+    private String nomRole;
 }

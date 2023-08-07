@@ -1,5 +1,5 @@
 package sprols.internship.Entities;
 
 public enum Etat {
-    Accepter,Refuser,EnAttente
+    ACCEPTER,REFUSER,ENATTENTE
 }
