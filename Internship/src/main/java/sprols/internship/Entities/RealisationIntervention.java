@@ -22,7 +22,6 @@ public class RealisationIntervention implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRealisationIntervnetion;
 
-    @Temporal(TemporalType.DATE)
     @NotNull
     @Column(nullable = false)
     private LocalDate dateRealisationIntervention;
@@ -35,12 +34,11 @@ public class RealisationIntervention implements Serializable {
     @Column(nullable = false)
     private int numMatriculeIntervenant;
 
-    @Temporal(TemporalType.DATE)
+
     @NotNull
     @Column(nullable = false)
     private LocalDate dateConstatDiagnostic;
 
-    @Temporal(TemporalType.DATE)
     @NotNull
     @Column(nullable = false)
     private LocalDate dateIntervention;

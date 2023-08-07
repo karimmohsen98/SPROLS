@@ -29,7 +29,7 @@ public class VerificationEfficacite implements Serializable {
     @Column(nullable = false)
     private int numMatriculeDemandeur;
 
-    @Temporal(TemporalType.DATE)
+
     @NotNull
     @Column(nullable = false)
     private LocalDate dateAvisDemandeur;
@@ -38,7 +38,7 @@ public class VerificationEfficacite implements Serializable {
     @Column(nullable = false)
     private String avisChefInformatique;
 
-    @Temporal(TemporalType.DATE)
+
     @NotNull
     @Column(nullable = false)
     private LocalDate dateAvisChefInformatique;

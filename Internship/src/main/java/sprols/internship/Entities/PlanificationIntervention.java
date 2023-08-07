@@ -31,7 +31,6 @@ public class PlanificationIntervention implements Serializable {
     private int numMatriculeIntervenant;
 
     @NotNull
-    @Temporal(TemporalType.DATE)
     private LocalDate dateIntervention;
 
     @OneToOne
