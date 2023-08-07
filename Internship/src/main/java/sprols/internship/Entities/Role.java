@@ -23,4 +23,7 @@ public class Role implements Serializable {
     @NotNull
     @Column(nullable = false)
     private String nomRole;
+
+    @OneToOne
+    private Utilisateur utilisateur;
 }

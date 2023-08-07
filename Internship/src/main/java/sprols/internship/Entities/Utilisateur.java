@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -67,5 +68,17 @@ public class Utilisateur implements Serializable {
        @NotNull
        @Column(nullable = false)
        private String bureau;
+
+       @OneToOne(mappedBy = "utilisateur")
+       private Role role;
+
+       @OneToMany(mappedBy = "utilisateurConge")
+       private List<Conge> congeList;
+
+       @OneToMany(mappedBy = "utilisateurAppro")
+       private List<Approvisionnement> approvisionnementList;
+
+       @OneToMany(mappedBy = "utilisateurDemandeInterv")
+       private List<DemandeIntervention> demandeInterventionList;
 
 }

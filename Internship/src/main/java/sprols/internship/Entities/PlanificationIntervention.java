@@ -33,4 +33,10 @@ public class PlanificationIntervention implements Serializable {
     @NotNull
     @Temporal(TemporalType.DATE)
     private LocalDate dateIntervention;
+
+    @OneToOne
+    private DemandeIntervention demandeInterventionPlan;
+
+    @OneToOne(mappedBy = "planificationInterventionR")
+    private RealisationIntervention realisationIntervention;
 }

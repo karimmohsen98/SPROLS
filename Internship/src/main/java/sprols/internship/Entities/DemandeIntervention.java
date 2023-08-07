@@ -55,4 +55,10 @@ public class DemandeIntervention implements Serializable {
 
     @Null
     private String typeMat;
+
+    @ManyToOne
+    private Utilisateur utilisateurDemandeInterv;
+
+    @OneToOne(mappedBy = "demandeInterventionPlan")
+    private PlanificationIntervention planificationIntervention;
 }

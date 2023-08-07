@@ -10,54 +10,43 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Conge implements Serializable {
+@Entity
+public class VerificationEfficacite implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idConge;
+    private int idVerification;
 
     @NotNull
     @Column(nullable = false)
-    private LocalDate dateDebut;
+    private String avisDemandeurVerification;
 
     @NotNull
     @Column(nullable = false)
-    private LocalDate dateFin;
+    private int numMatriculeDemandeur;
+
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate dateAvisDemandeur;
 
     @NotNull
     @Column(nullable = false)
-    private TypeConge typeConge;
+    private String avisChefInformatique;
+
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    @Column(nullable = false)
+    private LocalDate dateAvisChefInformatique;
 
     @NotNull
     @Column(nullable = false)
-    private Etat etatConge;
+    private int numMatriculeChefInformatique;
 
-    @NotNull
-    @Column(nullable = false)
-    private int soldesConge;
-
-    @NotNull
-    @Column(nullable = false)
-    private int nombreJours;
-
-    @NotNull
-    @Column(nullable = false)
-    private int numMatriculeD;
-
-    @NotNull
-    @Column(nullable = false)
-    private int numMatriculeR;
-
-    @NotNull
-    @Column(nullable = false)
-    private String addressDurantConge;
-
-    @ManyToOne
-    private Utilisateur utilisateurConge;
-
+    @OneToOne
+    private RealisationIntervention realisationInterventionV;
 }

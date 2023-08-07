@@ -52,4 +52,10 @@ public class RealisationIntervention implements Serializable {
     @Null
     @Column()
     private Origine origine;
+
+    @OneToOne
+    private PlanificationIntervention planificationInterventionR;
+
+    @OneToOne(mappedBy = "realisationInterventionV")
+    private VerificationEfficacite verificationEfficacite;
 }

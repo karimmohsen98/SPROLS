@@ -32,4 +32,7 @@ public class Approvisionnement implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Etat etatApprovisionnement;
+
+    @ManyToOne
+    private Utilisateur utilisateurAppro;
 }
