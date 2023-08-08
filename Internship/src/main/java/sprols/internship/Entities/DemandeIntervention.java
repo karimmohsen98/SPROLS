@@ -23,7 +23,7 @@ public class DemandeIntervention implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeDemandeur;
+    private String numMatriculeDemandeur;
 
     @NotNull
     @Column(nullable = false)
@@ -51,6 +51,7 @@ public class DemandeIntervention implements Serializable {
 
     @NotNull
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Etat etatDemandeIntervention;
 
     @Null

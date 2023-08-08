@@ -32,7 +32,7 @@ public class RealisationIntervention implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeIntervenant;
+    private String numMatriculeIntervenant;
 
 
     @NotNull

@@ -35,6 +35,7 @@ public class Conge implements Serializable {
 
     @NotNull
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Etat etatConge;
 
     @NotNull
@@ -47,11 +48,11 @@ public class Conge implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeD;
+    private String numMatriculeD;
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeR;
+    private String numMatriculeR;
 
     @NotNull
     @Column(nullable = false)

@@ -27,7 +27,7 @@ public class VerificationEfficacite implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeDemandeur;
+    private String numMatriculeDemandeur;
 
 
     @NotNull
@@ -45,7 +45,7 @@ public class VerificationEfficacite implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeChefInformatique;
+    private String numMatriculeChefInformatique;
 
     @OneToOne
     private RealisationIntervention realisationInterventionV;

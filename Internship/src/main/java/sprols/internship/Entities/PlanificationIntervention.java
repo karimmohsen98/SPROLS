@@ -28,7 +28,7 @@ public class PlanificationIntervention implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int numMatriculeIntervenant;
+    private String numMatriculeIntervenant;
 
     @NotNull
     private LocalDate dateIntervention;
