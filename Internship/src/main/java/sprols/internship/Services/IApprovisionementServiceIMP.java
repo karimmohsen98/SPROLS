@@ -58,7 +58,7 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
                 approvisionnement.setEtatApprovisionnement(etat);
                 approvisionnementRepository.save(approvisionnement);
             } else {
-                throw new IllegalArgumentException("un erreur s'est produit");
+                throw new IllegalArgumentException("une erreur s'est produit");
             }
         }
         return ResponseEntity.ok(approvisionnement);

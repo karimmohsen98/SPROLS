@@ -69,7 +69,7 @@ public class Utilisateur implements Serializable {
        @Column(nullable = false)
        private String bureau;
 
-       @OneToOne(mappedBy = "utilisateur")
+       @OneToOne()
        private Role role;
 
        @OneToMany(mappedBy = "utilisateurConge")

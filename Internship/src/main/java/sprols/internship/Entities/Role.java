@@ -24,6 +24,6 @@ public class Role implements Serializable {
     @Column(nullable = false)
     private String nomRole;
 
-    @OneToOne
+    @OneToOne(mappedBy = "role")
     private Utilisateur utilisateur;
 }
