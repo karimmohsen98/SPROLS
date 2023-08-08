@@ -31,7 +31,8 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
     }
 
     @Override
-    public void supprimerUtilisateur(Integer idRole) {
-
+    public ResponseEntity<Object> supprimerUtilisateur(Integer idUser) {
+        utilisateurRepository.deleteById(idUser);
+        return ResponseEntity.ok("utilisateur supprimer");
     }
 }

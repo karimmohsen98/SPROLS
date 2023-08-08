@@ -17,4 +17,9 @@ public class UtilisateurController {
     public ResponseEntity<Object> ajouterAffecterUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable int idRole) {
         return iUtilisateurServiceIMP.ajoutUtilisateur(utilisateur, idRole);
     }
+
+    @DeleteMapping("/supprimerutilisateur/{idUser}")
+    public ResponseEntity<Object> supprimerUtilisateur(Integer idUser){
+        return iUtilisateurServiceIMP.supprimerUtilisateur(idUser);
+    }
 }
