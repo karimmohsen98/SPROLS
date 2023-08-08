@@ -18,4 +18,9 @@ public class ApprovisionnementController {
     public ResponseEntity<Object> ajouterApp(@RequestBody Approvisionnement approvisionnement,@PathVariable String numMatricule){
         return iApprovisionementServiceIMP.ajoutAppro(approvisionnement, numMatricule);
     }
+
+    @PutMapping("/modifierappro/{idApprovisionnement}")
+    public ResponseEntity<Object> modifierQuantiteLivre(@PathVariable int idApprovisionnement, int quantiteLivre){
+        return iApprovisionementServiceIMP.modifierQuantiteLivre(idApprovisionnement, quantiteLivre);
+    }
 }
