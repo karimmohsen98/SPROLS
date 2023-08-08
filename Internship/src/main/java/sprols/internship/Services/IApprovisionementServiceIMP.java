@@ -49,4 +49,19 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
           return ResponseEntity.ok(approvisionnement);
 
     }
+
+    @Override
+    public ResponseEntity<Object> modifierEtatAppro(int idApprovisionnement,Etat etat) {
+        Approvisionnement approvisionnement = approvisionnementRepository.findById(idApprovisionnement).orElse(null);
+        if (approvisionnement != null) {
+            if ("accepter".equalsIgnoreCase(etat.toString()) || "refuser".equalsIgnoreCase(etat.toString())) {
+                approvisionnement.setEtatApprovisionnement(etat);
+                approvisionnementRepository.save(approvisionnement);
+            } else {
+                throw new IllegalArgumentException("un erreur s'est produit");
+            }
+        }
+        return ResponseEntity.ok(approvisionnement);
+
+    }
 }
