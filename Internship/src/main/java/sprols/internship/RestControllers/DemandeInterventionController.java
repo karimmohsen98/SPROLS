@@ -19,13 +19,18 @@ public class DemandeInterventionController {
     private final DemandeInterventionRepository demandeInterventionRepository;
 
     @PostMapping("/ajouterdemande/{numMatricule}")
-    public ResponseEntity<Object> ajoutDemandeInterv(@RequestBody DemandeIntervention demandeIntervention,@PathVariable String numMatricule) {
+    public ResponseEntity<Object> ajoutDemandeInterv(@RequestBody DemandeIntervention demandeIntervention, @PathVariable String numMatricule) {
         return iDemandeInterventionServiceIMP.ajoutDemandeInterv(demandeIntervention, numMatricule);
     }
 
-    @PutMapping("/modifierdemande/{id}")
-    public ResponseEntity<Object> modifierEtatAppro(@PathVariable int id,@RequestParam Etat etat) {
-        return iDemandeInterventionServiceIMP.modifierEtatDemandeInter(id,etat);
+    @PutMapping("/modifieretatdemande/{id}")
+    public ResponseEntity<Object> modifierEtatAppro(@PathVariable int id, @RequestParam Etat etat) {
+        return iDemandeInterventionServiceIMP.modifierEtatDemandeInter(id, etat);
     }
 
+    @PutMapping("/modifierdemande")
+    public ResponseEntity<Object> modifierDemandeInterv(@RequestBody DemandeIntervention demandeIntervention) {
+        return iDemandeInterventionServiceIMP.modifierDemandeInterv(demandeIntervention);
+
     }
+}

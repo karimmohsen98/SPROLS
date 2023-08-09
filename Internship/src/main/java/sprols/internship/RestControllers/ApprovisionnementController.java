@@ -40,7 +40,7 @@ public class ApprovisionnementController {
         }
     }
 
-    @PutMapping("/modifierappro")
+    @PatchMapping("/modifierappro")
     ResponseEntity<Object> modifierAppro(Approvisionnement approvisionnement){
         return iApprovisionementServiceIMP.modifierAppro(approvisionnement);
     }

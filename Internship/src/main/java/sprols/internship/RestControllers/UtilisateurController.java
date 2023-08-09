@@ -20,7 +20,7 @@ public class UtilisateurController {
         return iUtilisateurServiceIMP.ajoutUtilisateur(utilisateur, idRole);
     }
 
-    @PutMapping("/modifierutilisateur")
+    @PatchMapping("/modifierutilisateur")
     public ResponseEntity<Object> modifierUtilisateur(@RequestBody Utilisateur utilisateur){
         return iUtilisateurServiceIMP.modifierUtilisateur(utilisateur);
     }

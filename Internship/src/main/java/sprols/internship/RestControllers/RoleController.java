@@ -16,7 +16,7 @@ public class RoleController {
     public ResponseEntity<Object> ajouterRole(@RequestBody Role role){
         return iRoleServiceIMP.ajoutRole(role);
     }
-    @PostMapping("/modifierrole")
+    @PatchMapping("/modifierrole")
     public ResponseEntity<Object> ModifierRole(@RequestBody Role role){
         return iRoleServiceIMP.modifierRole(role);
     }

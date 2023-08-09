@@ -45,6 +45,7 @@ public class IDemandeInterventionServiceIMP implements DemandeInterventionServic
         return ResponseEntity.ok(demandeIntervention);
     }
 
+    @Override
     public ResponseEntity<Object> modifierEtatDemandeInter(int id,Etat etat) {
         return modifierEtatGeneric.modifyEtat(
                 id,
@@ -54,6 +55,12 @@ public class IDemandeInterventionServiceIMP implements DemandeInterventionServic
                 "Demande n'existe pas."
         );
     }
+    @Override
+    public ResponseEntity<Object> supprimerDemandeInter(int id){
+        demandeInterventionRepository.deleteById(id);
+        return ResponseEntity.ok("Demande supprimé");
+    }
+
 
 }
 
