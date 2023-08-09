@@ -1,5 +1,6 @@
 package sprols.internship.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,16 +30,16 @@ public class DemandeIntervention implements Serializable {
     @Column(nullable = false)
     private int codeMateriel;
 
-    @Null
+    @Column(nullable = true)
     private String constructeur;
 
-    @Null
+    @Column(nullable = true)
     private String modele;
 
-    @Null
+    @Column(nullable = true)
     private String version;
 
-    @Null
+    @Column(nullable = true)
     private String typeModel;
 
     @NotNull
@@ -54,9 +55,10 @@ public class DemandeIntervention implements Serializable {
     @Enumerated(EnumType.STRING)
     private Etat etatDemandeIntervention;
 
-    @Null
+    @Column(nullable = true)
     private String typeMat;
 
+    @JsonIgnore
     @ManyToOne
     private Utilisateur utilisateurDemandeInterv;
 

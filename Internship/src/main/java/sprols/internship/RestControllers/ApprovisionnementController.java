@@ -39,4 +39,10 @@ public class ApprovisionnementController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/modifierappro")
+    ResponseEntity<Object> modifierAppro(Approvisionnement approvisionnement){
+        return iApprovisionementServiceIMP.modifierAppro(approvisionnement);
+    }
+
 }

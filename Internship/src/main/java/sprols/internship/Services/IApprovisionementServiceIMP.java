@@ -20,7 +20,7 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
     public ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule) {
 
         Utilisateur User = utilisateurRepository.findByNumMatricule(numMatricule);
-        //Assert.notNull(approvisionnement, "remplire approvionnement");
+        Assert.notNull(approvisionnement, "remplire approvionnement");
         if (User!=null) {
             approvisionnement.setNumMatriculeD(numMatricule);
             approvisionnement.setEtatApprovisionnement(Etat.ENATTENTE);
@@ -33,7 +33,6 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
 
     @Override
     public ResponseEntity<Object> modifierAppro(Approvisionnement approvisionnement) {
-
         approvisionnementRepository.save(approvisionnement);
         return ResponseEntity.ok(approvisionnement);
     }
