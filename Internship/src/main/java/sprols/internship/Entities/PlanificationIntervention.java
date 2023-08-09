@@ -23,7 +23,7 @@ public class PlanificationIntervention implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPlanification;
 
-    @Null
+    @Column(nullable = true)
     private String phases;
 
     @NotNull
