@@ -1,5 +1,7 @@
 package sprols.internship.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,5 +39,6 @@ public class PlanificationIntervention implements Serializable {
     private DemandeIntervention demandeInterventionPlan;
 
     @OneToOne(mappedBy = "planificationInterventionR")
+    @JsonIgnore
     private RealisationIntervention realisationIntervention;
 }

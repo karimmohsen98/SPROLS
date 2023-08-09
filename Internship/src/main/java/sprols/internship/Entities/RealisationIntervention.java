@@ -1,5 +1,7 @@
 package sprols.internship.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,7 @@ public class RealisationIntervention implements Serializable {
     @Column(nullable = false)
     private LocalDate dateRealisationIntervention;
 
-    @Null
+
     @Column()
     private String typeInternvetion;
 
@@ -43,14 +45,15 @@ public class RealisationIntervention implements Serializable {
     @Column(nullable = false)
     private LocalDate dateIntervention;
 
-    @Null
+
     @Column
     private Frequence frequence;
 
-    @Null
+
     @Column()
     private Origine origine;
 
+    @JsonIgnore
     @OneToOne
     private PlanificationIntervention planificationInterventionR;
 
