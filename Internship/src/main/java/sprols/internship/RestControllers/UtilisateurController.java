@@ -7,6 +7,8 @@ import sprols.internship.Entities.Approvisionnement;
 import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Services.IUtilisateurServiceIMP;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/utilisateur")
 @AllArgsConstructor
@@ -18,8 +20,21 @@ public class UtilisateurController {
         return iUtilisateurServiceIMP.ajoutUtilisateur(utilisateur, idRole);
     }
 
+    @PutMapping("/modifierutilisateur")
+    public ResponseEntity<Object> modifierUtilisateur(@RequestBody Utilisateur utilisateur){
+        return iUtilisateurServiceIMP.modifierUtilisateur(utilisateur);
+    }
+
     @DeleteMapping("/supprimerutilisateur/{idUser}")
     public ResponseEntity<Object> supprimerUtilisateur(Integer idUser){
         return iUtilisateurServiceIMP.supprimerUtilisateur(idUser);
+    }
+    @GetMapping("/rechercheruser/{numMat}")
+    public ResponseEntity<Utilisateur> rechercherUser(@PathVariable String numMat){
+        return iUtilisateurServiceIMP.rechercherUser(numMat);
+    }
+    @GetMapping("/affichertoutusers")
+    public ResponseEntity<List<Utilisateur>> afficherToutUsers(){
+        return iUtilisateurServiceIMP.afficherToutUsers();
     }
 }

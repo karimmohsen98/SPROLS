@@ -8,6 +8,8 @@ import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.RoleRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class IUtilisateurServiceIMP implements UtilisateurService{
@@ -27,12 +29,24 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
 
     @Override
     public ResponseEntity<Object> modifierUtilisateur(Utilisateur utilisateur) {
-        return null;
+        utilisateurRepository.save(utilisateur);
+        return ResponseEntity.ok(utilisateur);
+
     }
 
     @Override
     public ResponseEntity<Object> supprimerUtilisateur(Integer idUser) {
         utilisateurRepository.deleteById(idUser);
         return ResponseEntity.ok("utilisateur supprimer");
+    }
+
+    @Override
+    public ResponseEntity<Utilisateur> rechercherUser(String numMat) {
+        return ResponseEntity.ok(utilisateurRepository.findByNumMatricule(numMat));
+    }
+
+    @Override
+    public ResponseEntity<List<Utilisateur>> afficherToutUsers() {
+        return ResponseEntity.ok(utilisateurRepository.findAll());
     }
 }
