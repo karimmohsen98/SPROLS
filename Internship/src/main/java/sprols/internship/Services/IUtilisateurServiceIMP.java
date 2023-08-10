@@ -2,6 +2,7 @@ package sprols.internship.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import sprols.internship.Entities.Role;
 import sprols.internship.Entities.Utilisateur;
@@ -17,6 +18,9 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
 
     private final UtilisateurRepository utilisateurRepository;
     private final RoleRepository roleRepository;
+
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public ResponseEntity<Object> ajoutUtilisateur(Utilisateur utilisateur, int idRole) {
 
@@ -24,6 +28,7 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
         if (role!=null){
             utilisateur.setSoldesConge(30);
             utilisateur.setRole(role);
+            utilisateur.setPassword(bCryptPasswordEncoder.encode(utilisateur.getPassword()));
             utilisateurRepository.save(utilisateur);
         }
         return ResponseEntity.ok(utilisateur);

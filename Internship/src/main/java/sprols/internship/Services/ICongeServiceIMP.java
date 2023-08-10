@@ -19,15 +19,15 @@ public class ICongeServiceIMP implements CongeService{
 
     @Override
     public ResponseEntity<Object> ajoutConge(Conge conge, String numMatriculeD, String numMatriculeR) {
-        Utilisateur UserD = utilisateurRepository.findByNumMatricule(numMatriculeD);
-        Utilisateur UserR = utilisateurRepository.findByNumMatricule(numMatriculeR);
+        Utilisateur userD = utilisateurRepository.findByNumMatricule(numMatriculeD);
+        Utilisateur userR = utilisateurRepository.findByNumMatricule(numMatriculeR);
 
         Assert.notNull(conge, "remplire conge");
-        if (UserD!=null && UserR!=null){
-            conge.setUtilisateurConge(UserD);
+        if (userD!=null && userR!=null){
+            conge.setUtilisateurConge(userD);
             conge.setEtatConge(Etat.ENATTENTE);
-            conge.setNumMatriculeD(UserD.getNumMatricule());
-            conge.setNumMatriculeR(UserR.getNumMatricule());
+            conge.setNumMatriculeD(userD.getNumMatricule());
+            conge.setNumMatriculeR(userR.getNumMatricule());
             congeRepository.save(conge);
         }
         return ResponseEntity.ok(conge);
