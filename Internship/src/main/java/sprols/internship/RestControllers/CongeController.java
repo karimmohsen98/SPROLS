@@ -36,5 +36,11 @@ public class CongeController {
         iCongeServiceIMP.supprimerCOnge(idConge);
     }
 
+    @GetMapping("/afficherlisteconge/{numMatD}")
+    public ResponseEntity<Object> afficherlisteconge(@PathVariable String numMatD){
+        return iCongeServiceIMP.afficherlisteconge(numMatD);
+    }
+
+
 
 }

@@ -82,4 +82,11 @@ public class ICongeServiceIMP implements CongeService{
                 congeRepository.deleteById(idConge);
 
     }
+
+    @Override
+    public ResponseEntity<Object> afficherlisteconge(String numMatD){
+           return ResponseEntity.ok(congeRepository.findAllByNumMatriculeD(numMatD));
+
+    }
+
 }
