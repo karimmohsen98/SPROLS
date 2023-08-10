@@ -56,6 +56,10 @@ public class Conge implements Serializable {
     @Column(nullable = false)
     private String addressDurantConge;
 
+    @NotNull
+    @Column(nullable = false)
+    private Boolean traite;
+
     @ManyToOne
     @JsonIgnore
     private Utilisateur utilisateurConge;

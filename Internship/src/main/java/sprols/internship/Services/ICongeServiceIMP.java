@@ -9,13 +9,16 @@ import sprols.internship.Entities.Etat;
 import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.CongeRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
+import sprols.internship.Utils.ModifierEtatGeneric;
 
 @Service
 @AllArgsConstructor
 public class ICongeServiceIMP implements CongeService{
 
     private final CongeRepository congeRepository;
-    private final UtilisateurRepository utilisateurRepository;;
+    private final UtilisateurRepository utilisateurRepository;
+    private final ModifierEtatGeneric modifierEtatGeneric;
+
 
     @Override
     public ResponseEntity<Object> ajoutConge(Conge conge, String numMatriculeD, String numMatriculeR) {
@@ -26,6 +29,7 @@ public class ICongeServiceIMP implements CongeService{
         if (userD!=null && userR!=null){
             conge.setUtilisateurConge(userD);
             conge.setEtatConge(Etat.ENATTENTE);
+            conge.setTraite(false);
             conge.setNumMatriculeD(userD.getNumMatricule());
             conge.setNumMatriculeR(userR.getNumMatricule());
             congeRepository.save(conge);
@@ -38,18 +42,42 @@ public class ICongeServiceIMP implements CongeService{
         return null;
     }
 
-    @Override
-    public ResponseEntity<Object> modifierConge(int idConge) {
-        return null;
-    }
 
     @Override
     public ResponseEntity<Object> modifierEtatConge(int idConge, Etat etat) {
-        return null;
+        Conge congeFind = congeRepository.findById(idConge).orElse(null);
+        modifierEtatGeneric.modifyEtat(
+                idConge,
+                congeRepository,
+                etat,
+                conge -> conge.setEtatConge(etat),
+                "conge n'existe pas."
+        );
+        assert congeFind != null;
+        if (congeFind.getEtatConge() == Etat.ACCEPTER && Boolean.TRUE.equals(!congeFind.getTraite())) {
+            Utilisateur user = utilisateurRepository.findByNumMatricule(congeFind.getNumMatriculeD());
+            int daysRequested = congeFind.getNombreJours();
+
+            if (daysRequested <= user.getSoldesConge()) {
+                int newLeaveBalance = user.getSoldesConge() - daysRequested;
+                user.setSoldesConge(newLeaveBalance);
+                utilisateurRepository.save(user);
+
+                congeFind.setTraite(true);
+                congeRepository.save(congeFind);
+            } else {
+                return ResponseEntity.ok("Solde insuffisant");
+
+            }
+        }
+        return ResponseEntity.ok().body("Mis a jour");
+
     }
+
 
     @Override
     public void supprimerCOnge(Integer idConge) {
+                congeRepository.deleteById(idConge);
 
     }
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sprols.internship.Entities.Conge;
+import sprols.internship.Entities.Etat;
 import sprols.internship.Services.ICongeServiceIMP;
 
 @RestController
@@ -20,4 +21,10 @@ public class CongeController {
                                              @PathVariable String numMatriculeR) {
         return iCongeServiceIMP.ajoutConge(conge, numMatriculeD, numMatriculeR);
     }
+    @PatchMapping("/modifieretatconge/{idConge}")
+    public ResponseEntity<Object> modifierEtatConge(@PathVariable int idConge, Etat etat){
+        return iCongeServiceIMP.modifierEtatConge(idConge, etat);
+    }
+
+
 }
