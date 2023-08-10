@@ -26,5 +26,15 @@ public class CongeController {
         return iCongeServiceIMP.modifierEtatConge(idConge, etat);
     }
 
+    @PutMapping("/modifierconge")
+    public ResponseEntity<Object> modifierConge(@RequestBody Conge conge) {
+        return iCongeServiceIMP.modifierConge(conge);
+    }
+
+    @DeleteMapping("/supprimerconge/{idConge}")
+    public void supprimerCOnge(@PathVariable Integer idConge) {
+        iCongeServiceIMP.supprimerCOnge(idConge);
+    }
+
 
 }

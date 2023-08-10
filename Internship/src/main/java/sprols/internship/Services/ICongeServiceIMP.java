@@ -39,7 +39,9 @@ public class ICongeServiceIMP implements CongeService{
 
     @Override
     public ResponseEntity<Object> modifierConge(Conge conge) {
-        return null;
+        congeRepository.save(conge);
+        return ResponseEntity.ok(conge);
+
     }
 
 
