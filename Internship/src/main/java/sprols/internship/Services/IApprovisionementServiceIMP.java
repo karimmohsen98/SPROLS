@@ -63,4 +63,10 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
         return ResponseEntity.ok(approvisionnement);
 
     }
+
+    @Override
+    public void supprimerAppro(Integer idAppro) {
+        approvisionnementRepository.deleteById(idAppro);
+
+    }
 }

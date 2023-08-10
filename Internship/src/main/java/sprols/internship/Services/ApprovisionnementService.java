@@ -10,7 +10,6 @@ public interface ApprovisionnementService {
     ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule);
     ResponseEntity<Object> modifierAppro(Approvisionnement approvisionnement);
     ResponseEntity<Object> modifierQuantiteLivre(int idApprovisionnement, int quantiteLivre);
-
     ResponseEntity<Object> modifierEtatAppro(int idApprovisionnement,Etat etat);
-//    void supprimerAppro(Integer idRole);
+    void supprimerAppro(Integer idAppro);
 }

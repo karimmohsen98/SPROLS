@@ -45,4 +45,8 @@ public class ApprovisionnementController {
         return iApprovisionementServiceIMP.modifierAppro(approvisionnement);
     }
 
+    @DeleteMapping("/supprimerappro/{idAppro}")
+    public void supprimerAppro(@PathVariable Integer idAppro) {
+        iApprovisionementServiceIMP.supprimerAppro(idAppro);
+    }
 }
