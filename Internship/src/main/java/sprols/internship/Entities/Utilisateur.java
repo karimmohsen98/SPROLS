@@ -55,6 +55,11 @@ public class Utilisateur implements Serializable {
 
        @NotNull
        @Column(nullable = false)
+       private int soldesConge;
+
+
+       @NotNull
+       @Column(nullable = false)
        private String direction;
 
        @NotNull

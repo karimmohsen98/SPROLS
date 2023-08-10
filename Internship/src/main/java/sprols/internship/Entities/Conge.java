@@ -1,5 +1,6 @@
 package sprols.internship.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,16 +32,13 @@ public class Conge implements Serializable {
 
     @NotNull
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TypeConge typeConge;
 
     @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Etat etatConge;
-
-    @NotNull
-    @Column(nullable = false)
-    private int soldesConge;
 
     @NotNull
     @Column(nullable = false)
@@ -59,6 +57,7 @@ public class Conge implements Serializable {
     private String addressDurantConge;
 
     @ManyToOne
+    @JsonIgnore
     private Utilisateur utilisateurConge;
 
 }

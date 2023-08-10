@@ -8,6 +8,7 @@ import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.RoleRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 
+
 import java.util.List;
 
 @Service
@@ -21,6 +22,7 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
 
         Role role = roleRepository.findById(idRole).orElse(null);
         if (role!=null){
+            utilisateur.setSoldesConge(30);
             utilisateur.setRole(role);
             utilisateurRepository.save(utilisateur);
         }
