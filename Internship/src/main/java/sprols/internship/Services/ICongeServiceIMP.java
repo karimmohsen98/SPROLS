@@ -2,6 +2,7 @@ package sprols.internship.Services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import sprols.internship.Entities.Conge;
@@ -11,7 +12,9 @@ import sprols.internship.Repositories.CongeRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 import sprols.internship.Utils.ModifierEtatGeneric;
 
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -65,10 +68,9 @@ public class ICongeServiceIMP implements CongeService {
             int nbrJours = congeFind.getNombreJours();
 
             if (nbrJours <= user.getSoldesConge()) {
-                int soldeConge = user.getSoldesConge() - nbrJours;
+                double soldeConge = user.getSoldesConge() - nbrJours;
                 user.setSoldesConge(soldeConge);
                 utilisateurRepository.save(user);
-
                 congeFind.setTraite(true);
                 congeRepository.save(congeFind);
             } else {
@@ -90,6 +92,18 @@ public class ICongeServiceIMP implements CongeService {
     @Override
     public ResponseEntity<Object> afficherlisteconge(String numMatD) {
         return ResponseEntity.ok(congeRepository.findAllByNumMatriculeD(numMatD));
+
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 0 L * ?")
+    public void modifieCongeSolde() {
+        List<Utilisateur> utilisateurList  = utilisateurRepository.findAll();
+        for (Utilisateur utilisateur : utilisateurList) {
+            double nSolde = utilisateur.getSoldesConge() + 2.5;
+            utilisateur.setSoldesConge(nSolde);
+            utilisateurRepository.save(utilisateur);
+        }
 
     }
 

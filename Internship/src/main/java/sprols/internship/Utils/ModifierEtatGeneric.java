@@ -23,7 +23,6 @@ public class ModifierEtatGeneric {
                     break;
                 }
             }
-
             if (isValidEnumValue) {
                 fieldModifier.accept(entity);
                 repository.save(entity);
@@ -33,7 +32,6 @@ public class ModifierEtatGeneric {
         } else {
             return ResponseEntity.badRequest().body(errorMessage);
         }
-
         return ResponseEntity.ok(entity);
     }
 }

@@ -58,8 +58,7 @@ public class Utilisateur implements Serializable, UserDetails {
 
        @NotNull
        @Column(nullable = false)
-       private int soldesConge;
-
+       private double soldesConge;
 
        @NotNull
        @Column(nullable = false)

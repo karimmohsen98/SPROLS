@@ -21,7 +21,6 @@ public class Materiel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMateriel;
 
-
     @NotNull
     @Column(nullable = false)
     private String nomMateriel;
@@ -30,6 +29,6 @@ public class Materiel implements Serializable{
     @Column(nullable = false)
     private int quantiteDemande;
 
-    @Null
+    @NotNull
     private int quantiteApprovisionne;
 }
