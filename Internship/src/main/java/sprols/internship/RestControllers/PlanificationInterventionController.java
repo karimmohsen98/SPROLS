@@ -13,10 +13,11 @@ public class PlanificationInterventionController {
 
     private final IPlanificationInterventionServiceIMP iPlanificationInterventionServiceIMP;
 
-    @PostMapping("/ajouterplanificationintervention/{idDemandeInterv}")
+    @PostMapping("/ajouterplanificationintervention/{idDemandeInterv}/{matriculeIntervenant}")
     public ResponseEntity<Object> ajoutPlaniInterv(@RequestBody PlanificationIntervention planificationIntervention
-            , @PathVariable int idDemandeInterv) {
-        return iPlanificationInterventionServiceIMP.ajoutPlaniInterv(planificationIntervention, idDemandeInterv);
+            , @PathVariable int idDemandeInterv
+            , @PathVariable String matriculeIntervenant) {
+        return iPlanificationInterventionServiceIMP.ajoutPlaniInterv(planificationIntervention, idDemandeInterv,matriculeIntervenant);
     }
 
     @PutMapping("/modifierplanificationintervention")

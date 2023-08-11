@@ -13,9 +13,11 @@ public class RealisationInterventionController {
 
     private final IRealisationInterventionServiceIMP iRealisationInterventionServiceIMP;
 
-    @PostMapping("/ajouterrealisationintervention/{idPlaniInterv}")
-    public ResponseEntity<Object> ajoutRealiInterv(@RequestBody RealisationIntervention realisationInterv,@PathVariable int idPlaniInterv) {
-        return iRealisationInterventionServiceIMP.ajoutRealiInterv(realisationInterv, idPlaniInterv);
+    @PostMapping("/ajouterrealisationintervention/{idPlaniInterv}/{matriculeIntervenant}")
+    public ResponseEntity<Object> ajoutRealiInterv(@RequestBody RealisationIntervention realisationInterv
+            ,@PathVariable int idPlaniInterv
+            ,@PathVariable String matriculeIntervenant) {
+        return iRealisationInterventionServiceIMP.ajoutRealiInterv(realisationInterv, idPlaniInterv,matriculeIntervenant);
 
     }
     @PutMapping("/modifierrealisationintervention")

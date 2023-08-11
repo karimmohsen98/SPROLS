@@ -11,9 +11,11 @@ import sprols.internship.Repositories.CongeRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 import sprols.internship.Utils.ModifierEtatGeneric;
 
+import java.time.DayOfWeek;
+
 @Service
 @AllArgsConstructor
-public class ICongeServiceIMP implements CongeService{
+public class ICongeServiceIMP implements CongeService {
 
     private final CongeRepository congeRepository;
     private final UtilisateurRepository utilisateurRepository;
@@ -26,7 +28,10 @@ public class ICongeServiceIMP implements CongeService{
         Utilisateur userR = utilisateurRepository.findByNumMatricule(numMatriculeR);
 
         Assert.notNull(conge, "remplire conge");
-        if (userD!=null && userR!=null){
+        if (conge.getDateFin().getDayOfWeek() == DayOfWeek.FRIDAY) {
+            conge.setNombreJours(conge.getNombreJours() + 2);
+        }
+        if (userD != null && userR != null) {
             conge.setUtilisateurConge(userD);
             conge.setEtatConge(Etat.ENATTENTE);
             conge.setTraite(false);
@@ -44,7 +49,6 @@ public class ICongeServiceIMP implements CongeService{
 
     }
 
-
     @Override
     public ResponseEntity<Object> modifierEtatConge(int idConge, Etat etat) {
         Conge congeFind = congeRepository.findById(idConge).orElse(null);
@@ -58,11 +62,11 @@ public class ICongeServiceIMP implements CongeService{
         assert congeFind != null;
         if (congeFind.getEtatConge() == Etat.ACCEPTER && Boolean.TRUE.equals(!congeFind.getTraite())) {
             Utilisateur user = utilisateurRepository.findByNumMatricule(congeFind.getNumMatriculeD());
-            int daysRequested = congeFind.getNombreJours();
+            int nbrJours = congeFind.getNombreJours();
 
-            if (daysRequested <= user.getSoldesConge()) {
-                int newLeaveBalance = user.getSoldesConge() - daysRequested;
-                user.setSoldesConge(newLeaveBalance);
+            if (nbrJours <= user.getSoldesConge()) {
+                int soldeConge = user.getSoldesConge() - nbrJours;
+                user.setSoldesConge(soldeConge);
                 utilisateurRepository.save(user);
 
                 congeFind.setTraite(true);
@@ -79,13 +83,13 @@ public class ICongeServiceIMP implements CongeService{
 
     @Override
     public void supprimerCOnge(Integer idConge) {
-                congeRepository.deleteById(idConge);
+        congeRepository.deleteById(idConge);
 
     }
 
     @Override
-    public ResponseEntity<Object> afficherlisteconge(String numMatD){
-           return ResponseEntity.ok(congeRepository.findAllByNumMatriculeD(numMatD));
+    public ResponseEntity<Object> afficherlisteconge(String numMatD) {
+        return ResponseEntity.ok(congeRepository.findAllByNumMatriculeD(numMatD));
 
     }
 

@@ -26,4 +26,6 @@ public class ConfigSecurite  {
     {
         return new BCryptPasswordEncoder();
     }
+
+
 }

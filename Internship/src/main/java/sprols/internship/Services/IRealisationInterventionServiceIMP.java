@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import sprols.internship.Entities.DemandeIntervention;
 import sprols.internship.Entities.PlanificationIntervention;
 import sprols.internship.Entities.RealisationIntervention;
+import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.PlanificationInterventionRepository;
 import sprols.internship.Repositories.RealisationInterventionRepository;
+import sprols.internship.Repositories.UtilisateurRepository;
 
 @Service
 @AllArgsConstructor
@@ -15,11 +17,14 @@ public class IRealisationInterventionServiceIMP implements RealisationInterventi
 
     private final RealisationInterventionRepository realisationInterventionRepository;
     private final PlanificationInterventionRepository planificationInterventionRepository;
+    private final UtilisateurRepository utilisateurRepository;
     @Override
-    public ResponseEntity<Object> ajoutRealiInterv(RealisationIntervention realisationInterv, int idPlaniInterv) {
+    public ResponseEntity<Object> ajoutRealiInterv(RealisationIntervention realisationInterv, int idPlaniInterv,String matriculeIntervenant){
         PlanificationIntervention planificationIntervention = planificationInterventionRepository.findById(idPlaniInterv).orElse(null);
+        Utilisateur user = utilisateurRepository.findByNumMatricule(matriculeIntervenant);
 
-        if (planificationIntervention != null) {
+        if (planificationIntervention != null && user != null) {
+            realisationInterv.setNumMatriculeIntervenant(matriculeIntervenant);
             realisationInterv.setPlanificationInterventionR(planificationIntervention);
             realisationInterventionRepository.save(realisationInterv);
         }

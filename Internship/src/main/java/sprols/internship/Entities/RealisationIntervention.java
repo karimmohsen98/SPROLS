@@ -57,6 +57,7 @@ public class RealisationIntervention implements Serializable {
     @OneToOne
     private PlanificationIntervention planificationInterventionR;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "realisationInterventionV")
     private VerificationEfficacite verificationEfficacite;
 }
