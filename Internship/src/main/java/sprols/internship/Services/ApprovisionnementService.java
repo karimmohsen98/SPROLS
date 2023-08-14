@@ -7,7 +7,7 @@ import sprols.internship.Entities.Role;
 
 public interface ApprovisionnementService {
 
-    ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule);
+    ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule,int idMat);
     ResponseEntity<Object> modifierAppro(Approvisionnement approvisionnement);
     ResponseEntity<Object> modifierQuantiteLivre(int idApprovisionnement, int quantiteLivre);
     ResponseEntity<Object> modifierEtatAppro(int idApprovisionnement,Etat etat);

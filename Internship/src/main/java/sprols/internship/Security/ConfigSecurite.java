@@ -7,12 +7,21 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
-public class ConfigSecurite  {
+public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -26,6 +35,25 @@ public class ConfigSecurite  {
     {
         return new BCryptPasswordEncoder();
     }
+
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws ServletException, IOException {
+
+        String adminHome = "/adminHome";
+        String userHome = "/userHome";
+
+        Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+
+        if (authorities.contains("user")) {
+            getRedirectStrategy().sendRedirect(request, response, userHome);
+        }
+        else if(authorities.contains("admin")) {
+            getRedirectStrategy().sendRedirect(request, response, adminHome);
+
+        }
+
+    }
+
 
 
 }

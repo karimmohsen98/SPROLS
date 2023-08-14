@@ -6,25 +6,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import sprols.internship.Entities.Approvisionnement;
 import sprols.internship.Entities.Etat;
+import sprols.internship.Entities.Materiel;
 import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.ApprovisionnementRepository;
+import sprols.internship.Repositories.MaterielRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class IApprovisionementServiceIMP implements ApprovisionnementService{
     UtilisateurRepository utilisateurRepository;
     ApprovisionnementRepository approvisionnementRepository;
+    MaterielRepository materielRepository;
 
     @Override
-    public ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule) {
+    public ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule , int idMat) {
 
         Utilisateur User = utilisateurRepository.findByNumMatricule(numMatricule);
+        Materiel material = materielRepository.findById(idMat).orElse(null);
+        List<Materiel> materielList = new ArrayList<>();
+        materielList.add(material);
+
         Assert.notNull(approvisionnement, "remplire approvionnement");
-        if (User!=null) {
+        if (User!=null && material!=null) {
             approvisionnement.setNumMatriculeD(numMatricule);
             approvisionnement.setEtatApprovisionnement(Etat.ENATTENTE);
             approvisionnement.setUtilisateurAppro(User);
+            approvisionnement.setMaterielList(materielList);
         }
         approvisionnementRepository.save(approvisionnement);
         return ResponseEntity.ok(approvisionnement);
@@ -69,4 +80,5 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
         approvisionnementRepository.deleteById(idAppro);
 
     }
+
 }

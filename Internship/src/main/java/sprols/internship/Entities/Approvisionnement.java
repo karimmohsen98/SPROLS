@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,10 +29,6 @@ public class Approvisionnement implements Serializable {
     private String numMatriculeD;
 
     private String typeApprovisionnement;
-
-    @NotNull
-    @Column(nullable = false)
-    private String nomMateriel;
 
     @NotNull
     @Column(nullable = false)
@@ -53,4 +50,8 @@ public class Approvisionnement implements Serializable {
     @ManyToOne
     @JsonIgnore
     private Utilisateur utilisateurAppro;
+
+    @ManyToMany
+    @JsonIgnore
+    List<Materiel> materielList;
 }

@@ -15,9 +15,11 @@ import sprols.internship.Services.IApprovisionementServiceIMP;
 public class ApprovisionnementController {
     private final IApprovisionementServiceIMP iApprovisionementServiceIMP;
 
-    @PostMapping("/ajouterappro/{numMatricule}")
-    public ResponseEntity<Object> ajouterApp(@RequestBody Approvisionnement approvisionnement, @PathVariable String numMatricule) {
-        return iApprovisionementServiceIMP.ajoutAppro(approvisionnement, numMatricule);
+    @PostMapping("/ajouterappro/{numMatricule}/{idMat}")
+    public ResponseEntity<Object> ajouterApp(@RequestBody Approvisionnement approvisionnement
+            , @PathVariable String numMatricule
+            , @PathVariable int idMat) {
+        return iApprovisionementServiceIMP.ajoutAppro(approvisionnement, numMatricule, idMat);
     }
 
     @PutMapping("/modifierappro/{idApprovisionnement}")

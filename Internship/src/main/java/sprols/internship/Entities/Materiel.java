@@ -7,8 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,10 +25,6 @@ public class Materiel implements Serializable{
     @Column(nullable = false)
     private String nomMateriel;
 
-    @NotNull
-    @Column(nullable = false)
-    private int quantiteDemande;
-
-    @NotNull
-    private int quantiteApprovisionne;
+    @ManyToMany(mappedBy = "materielList")
+    List<Approvisionnement> approvisionnementList;
 }
