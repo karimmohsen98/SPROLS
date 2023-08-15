@@ -12,6 +12,10 @@ public interface UtilisateurService {
     ResponseEntity<Object> supprimerUtilisateur(Integer idRole);
     ResponseEntity<Utilisateur> rechercherUser(String numMat);
     ResponseEntity<List<Utilisateur>> afficherToutUsers();
+    void desactiverCompte(String numMat);
+    void activeCompte(String numMat);
+    ResponseEntity<Object> getUserbyRole(int idRole);
 
 
-}
+
+    }

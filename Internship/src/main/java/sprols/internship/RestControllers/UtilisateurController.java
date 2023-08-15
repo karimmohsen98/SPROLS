@@ -21,20 +21,41 @@ public class UtilisateurController {
     }
 
     @PatchMapping("/modifierutilisateur")
-    public ResponseEntity<Object> modifierUtilisateur(@RequestBody Utilisateur utilisateur){
+    public ResponseEntity<Object> modifierUtilisateur(@RequestBody Utilisateur utilisateur) {
         return iUtilisateurServiceIMP.modifierUtilisateur(utilisateur);
     }
 
     @DeleteMapping("/supprimerutilisateur/{idUser}")
-    public ResponseEntity<Object> supprimerUtilisateur(Integer idUser){
+    public ResponseEntity<Object> supprimerUtilisateur(Integer idUser) {
         return iUtilisateurServiceIMP.supprimerUtilisateur(idUser);
     }
+
     @GetMapping("/rechercheruser/{numMat}")
-    public ResponseEntity<Utilisateur> rechercherUser(@PathVariable String numMat){
+    public ResponseEntity<Utilisateur> rechercherUser(@PathVariable String numMat) {
         return iUtilisateurServiceIMP.rechercherUser(numMat);
     }
+
     @GetMapping("/affichertoutusers")
-    public ResponseEntity<List<Utilisateur>> afficherToutUsers(){
+    public ResponseEntity<List<Utilisateur>> afficherToutUsers() {
         return iUtilisateurServiceIMP.afficherToutUsers();
     }
+
+    @GetMapping("/getuserbyrole/{idRole}")
+    public ResponseEntity<Object> getUserbyRole(@PathVariable int idRole) {
+        return iUtilisateurServiceIMP.getUserbyRole(idRole);
+    }
+
+    @PutMapping("/desactivercompte/{numMat}")
+    void desactiverCompte(@PathVariable String numMat){
+        iUtilisateurServiceIMP.desactiverCompte(numMat);
+
+    }
+    @PutMapping("/activercompte/{numMat}")
+    void activeCompte(String numMat){
+        iUtilisateurServiceIMP.activeCompte(numMat);
+
+    }
+
+
 }
+
