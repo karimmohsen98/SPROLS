@@ -24,15 +24,16 @@ import java.util.Set;
 public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth.anyRequest().permitAll())
+                //AnyMatchers For Later Use to path roles into the appropriate endpoints
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder()
-    {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -46,14 +47,11 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
 
         if (authorities.contains("user")) {
             getRedirectStrategy().sendRedirect(request, response, userHome);
-        }
-        else if(authorities.contains("admin")) {
+        } else if (authorities.contains("admin")) {
             getRedirectStrategy().sendRedirect(request, response, adminHome);
 
         }
 
     }
-
-
 
 }
