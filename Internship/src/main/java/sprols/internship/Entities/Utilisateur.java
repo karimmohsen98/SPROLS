@@ -43,6 +43,10 @@ public class Utilisateur implements Serializable, UserDetails {
        @Column(nullable = false)
        private LocalDate dateNaissance;
 
+       @NotNull
+       @Column(name = "StatusCompte",nullable = false)
+       private boolean StatusCompte;
+
        @Email
        @NotNull
        @Column(nullable = false)

@@ -28,6 +28,7 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
         if (role!=null){
             utilisateur.setSoldesConge(30);
             utilisateur.setRole(role);
+            utilisateur.setStatusCompte(true);
             utilisateur.setPassword(bCryptPasswordEncoder.encode(utilisateur.getPassword()));
             utilisateurRepository.save(utilisateur);
         }
