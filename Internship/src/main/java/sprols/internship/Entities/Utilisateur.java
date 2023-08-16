@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Utilisateur implements Serializable, UserDetails {
+public class Utilisateur implements  UserDetails {
 
        @Id
        @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,33 +93,34 @@ public class Utilisateur implements Serializable, UserDetails {
        @OneToMany(mappedBy = "utilisateurDemandeInterv")
        private List<DemandeIntervention> demandeInterventionList;
 
+
        @Override
        public Collection<? extends GrantedAuthority> getAuthorities() {
-              return null;
+              return List.of(new SimpleGrantedAuthority("ROLE_"+role.getNomRole()));
        }
 
        @Override
        public String getUsername() {
-              return null;
+              return numMatricule;
        }
 
        @Override
        public boolean isAccountNonExpired() {
-              return false;
+              return true;
        }
 
        @Override
        public boolean isAccountNonLocked() {
-              return false;
+              return true;
        }
 
        @Override
        public boolean isCredentialsNonExpired() {
-              return false;
+              return true;
        }
 
        @Override
        public boolean isEnabled() {
-              return false;
+              return true;
        }
 }
