@@ -37,7 +37,7 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/api/auth/**","/api/role/**")
+                .antMatchers("/api/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
