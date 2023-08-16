@@ -1,9 +1,7 @@
 package sprols.internship.Entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Utilisateur implements  UserDetails {
 
        @Id
@@ -41,17 +40,13 @@ public class Utilisateur implements  UserDetails {
        private String prenomUtilisateur;
 
        @NotNull
+       @DateTimeFormat(pattern = "yyyy-MM-dd")
        @Column(nullable = false)
        private LocalDate dateNaissance;
 
        @NotNull
        @Column(name = "StatusCompte",nullable = false)
        private boolean StatusCompte;
-
-       @Email
-       @NotNull
-       @Column(nullable = false)
-       private String email;
 
        @NotNull
        @Column(nullable = false)
@@ -96,7 +91,7 @@ public class Utilisateur implements  UserDetails {
 
        @Override
        public Collection<? extends GrantedAuthority> getAuthorities() {
-              return List.of(new SimpleGrantedAuthority("ROLE_"+role.getNomRole()));
+              return List.of(new SimpleGrantedAuthority(role.getNomRole()));
        }
 
        @Override

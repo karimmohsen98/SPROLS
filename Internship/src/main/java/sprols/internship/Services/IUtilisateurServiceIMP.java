@@ -22,7 +22,7 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
     private final UtilisateurRepository utilisateurRepository;
     private final RoleRepository roleRepository;
 
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public ResponseEntity<Object> ajoutUtilisateur(Utilisateur utilisateur, int idRole) {
