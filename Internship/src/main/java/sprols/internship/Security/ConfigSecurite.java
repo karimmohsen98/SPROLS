@@ -38,7 +38,17 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/api/auth/**")
+                .antMatchers("/api/auth/**",
+                        "/v2/api-docs",
+                        "/v3/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources",
+                        "/configuration/security",
+                        "/v3/api-docs/**",
+                        "/swagger-resources/**",
+                        "/swagger-ui.html",
+                        "/webjars/**",
+                        "/swagger.ui/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
