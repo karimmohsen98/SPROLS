@@ -1,29 +1,15 @@
 package sprols.internship.Entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
+@RequiredArgsConstructor
+public enum Role {
+    ADMIN(Set.of(Permission.ADMIN_READ, Permission.ADMIN_WRITE, Permission.ADMIN_UPDATE, Permission.ADMIN_DELETE)),
+    USER(Set.of(Permission.USER_READ, Permission.USER_WRITE, Permission.USER_UPDATE, Permission.USER_DELETE));
 
-public class Role implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRole;
-
-    @NotNull
-    @Column(nullable = false)
-    private String nomRole;
-
-    @OneToOne(mappedBy = "role")
-    private Utilisateur utilisateur;
+    @Getter
+    private final Set<Permission> permissions;
 }

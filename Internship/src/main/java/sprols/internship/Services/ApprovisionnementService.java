@@ -3,7 +3,6 @@ package sprols.internship.Services;
 import org.springframework.http.ResponseEntity;
 import sprols.internship.Entities.Approvisionnement;
 import sprols.internship.Entities.Etat;
-import sprols.internship.Entities.Role;
 
 public interface ApprovisionnementService {
 

@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sprols.internship.Entities.Approvisionnement;
 import sprols.internship.Entities.Etat;
-import sprols.internship.Entities.Role;
-import sprols.internship.Services.ApprovisionnementService;
 import sprols.internship.Services.IApprovisionementServiceIMP;
 
 @RestController

@@ -2,10 +2,7 @@ package sprols.internship.RestControllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import sprols.internship.Entities.Role;
-import sprols.internship.Services.IRoleServiceIMP;
 
 @RestController
 @RequestMapping("/api/role")
