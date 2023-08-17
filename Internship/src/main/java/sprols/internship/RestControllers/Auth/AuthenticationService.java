@@ -10,6 +10,8 @@ import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.UtilisateurRepository;
 import sprols.internship.Security.JwtService;
 
+import static java.lang.Boolean.TRUE;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -25,6 +27,9 @@ public class AuthenticationService {
                 .dateNaissance(registerRequest.getDateNaissance())
                 .prenomUtilisateur(registerRequest.getPrenomUtilisateur())
                 .batiment(registerRequest.getBatiment())
+                .StatusCompte(TRUE)
+                .role(registerRequest.getRole())
+                .soldesConge(30.0)
                 .poste(registerRequest.getPoste())
                 .direction(registerRequest.getDirection())
                 .service(registerRequest.getService())

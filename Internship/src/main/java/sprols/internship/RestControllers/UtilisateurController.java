@@ -15,9 +15,9 @@ import java.util.List;
 public class UtilisateurController {
     private final IUtilisateurServiceIMP iUtilisateurServiceIMP;
 
-    @PostMapping("/ajouteraffecterutilisateur/{idRole}")
-    public ResponseEntity<Object> ajouterAffecterUtilisateur(@RequestBody Utilisateur utilisateur, @PathVariable int idRole) {
-        return iUtilisateurServiceIMP.ajoutUtilisateur(utilisateur, idRole);
+    @PostMapping("/ajouteraffecterutilisateur")
+    public ResponseEntity<Object> ajouterAffecterUtilisateur(@RequestBody Utilisateur utilisateur) {
+        return iUtilisateurServiceIMP.ajoutUtilisateur(utilisateur);
     }
 
     @PatchMapping("/modifierutilisateur")
@@ -38,11 +38,6 @@ public class UtilisateurController {
     @GetMapping("/affichertoutusers")
     public ResponseEntity<List<Utilisateur>> afficherToutUsers() {
         return iUtilisateurServiceIMP.afficherToutUsers();
-    }
-
-    @GetMapping("/getuserbyrole/{idRole}")
-    public ResponseEntity<Object> getUserbyRole(@PathVariable int idRole) {
-        return iUtilisateurServiceIMP.getUserbyRole(idRole);
     }
 
     @PutMapping("/desactivercompte/{numMat}")

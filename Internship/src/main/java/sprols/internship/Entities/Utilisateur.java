@@ -76,7 +76,7 @@ public class Utilisateur implements  UserDetails {
        @Column(nullable = false)
        private String bureau;
 
-       @OneToOne()
+       @Enumerated(EnumType.STRING)
        private Role role;
 
        @OneToMany(mappedBy = "utilisateurConge")
@@ -91,7 +91,7 @@ public class Utilisateur implements  UserDetails {
 
        @Override
        public Collection<? extends GrantedAuthority> getAuthorities() {
-              return List.of(new SimpleGrantedAuthority("ROLE_"+role.getNomRole()));
+              return role.getGrantedAuthorities();
        }
 
        @Override

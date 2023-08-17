@@ -7,14 +7,13 @@ import java.util.List;
 
 public interface UtilisateurService {
 
-    ResponseEntity<Object> ajoutUtilisateur(Utilisateur utilisateur,int idRole);
+    ResponseEntity<Object> ajoutUtilisateur(Utilisateur utilisateur);
     ResponseEntity<Object> modifierUtilisateur(Utilisateur utilisateur);
-    ResponseEntity<Object> supprimerUtilisateur(Integer idRole);
+    ResponseEntity<Object> supprimerUtilisateur(Integer idUser);
     ResponseEntity<Utilisateur> rechercherUser(String numMat);
     ResponseEntity<List<Utilisateur>> afficherToutUsers();
     void desactiverCompte(String numMat);
     void activeCompte(String numMat);
-    ResponseEntity<Object> getUserbyRole(int idRole);
 
 
 

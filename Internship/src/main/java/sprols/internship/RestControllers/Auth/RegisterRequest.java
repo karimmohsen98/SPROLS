@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import sprols.internship.Entities.Role;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
@@ -22,10 +23,11 @@ public class RegisterRequest {
     private String nomUtilisateur;
     private String prenomUtilisateur;
     private LocalDate dateNaissance;
-    //private boolean StatusCompte;
+    private boolean StatusCompte;
+    private Role role;
     private String password;
     private String poste;
-    //private double soldesConge;
+    private double soldesConge;
     private String direction;
     private String service;
     private String batiment;

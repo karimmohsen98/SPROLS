@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import sprols.internship.Entities.Role;
 import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.UtilisateurRepository;
 
@@ -18,21 +19,18 @@ import java.util.stream.Collectors;
 public class IUtilisateurServiceIMP implements UtilisateurService{
 
     private final UtilisateurRepository utilisateurRepository;
-    private final RoleRepository roleRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public ResponseEntity<Object> ajoutUtilisateur(Utilisateur utilisateur, int idRole) {
+    public ResponseEntity<Object> ajoutUtilisateur(Utilisateur utilisateur) {
 
-        Role role = roleRepository.findById(idRole).orElse(null);
-        if (role!=null){
+
             utilisateur.setSoldesConge(30);
-            utilisateur.setRole(role);
+            utilisateur.setRole(Role.USER);
             utilisateur.setStatusCompte(true);
             utilisateur.setPassword(bCryptPasswordEncoder.encode(utilisateur.getPassword()));
             utilisateurRepository.save(utilisateur);
-        }
+
         return ResponseEntity.ok(utilisateur);
     }
 
@@ -73,31 +71,9 @@ public class IUtilisateurServiceIMP implements UtilisateurService{
         Utilisateur utilisateur = utilisateurRepository.findByNumMatricule(numMat);
         if (utilisateur != null && !utilisateur.isStatusCompte()) {
             utilisateur.setStatusCompte(true);
-
+            utilisateurRepository.save(utilisateur);
         }
-        utilisateurRepository.save(utilisateur);
 
     }
 
-    @Override
-    public ResponseEntity<Object> getUserbyRole(int idRole) {
-        Optional<Role> optionalRole = roleRepository.findById(idRole);
-        if (optionalRole.isPresent()) {
-            List<Utilisateur> result = utilisateurRepository.findAll()
-                    .stream()
-                    .filter(e -> e.getRole().getIdRole() == idRole)
-                    .collect(Collectors.toList());
-            if (result.isEmpty()) {
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body("Liste des authorites est vide " + idRole);
-            }
-            return ResponseEntity
-                    .status(HttpStatus.FOUND)
-                    .body(result);
-        }
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body("Authorite avec id " + idRole);
-    }
 }
