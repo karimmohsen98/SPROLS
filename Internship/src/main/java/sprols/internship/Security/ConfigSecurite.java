@@ -39,6 +39,7 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
                 .disable()
                 .authorizeHttpRequests()
                 .antMatchers("/api/auth/**",
+                        "/api/approvisionnement/**",
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/configuration/ui",

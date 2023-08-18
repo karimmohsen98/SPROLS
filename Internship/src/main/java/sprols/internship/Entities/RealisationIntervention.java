@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -54,10 +55,10 @@ public class RealisationIntervention implements Serializable {
     private Origine origine;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     private PlanificationIntervention planificationInterventionR;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "realisationInterventionV")
-    private VerificationEfficacite verificationEfficacite;
+    @OneToMany(mappedBy = "realisationInterventionV")
+    private List<VerificationEfficacite> verificationEfficacite;
 }

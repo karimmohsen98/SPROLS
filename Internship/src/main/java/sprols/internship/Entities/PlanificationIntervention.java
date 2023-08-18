@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -38,7 +39,7 @@ public class PlanificationIntervention implements Serializable {
     @OneToOne
     private DemandeIntervention demandeInterventionPlan;
 
-    @OneToOne(mappedBy = "planificationInterventionR")
+    @OneToMany(mappedBy = "planificationInterventionR")
     @JsonIgnore
-    private RealisationIntervention realisationIntervention;
+    private List<RealisationIntervention> realisationIntervention;
 }

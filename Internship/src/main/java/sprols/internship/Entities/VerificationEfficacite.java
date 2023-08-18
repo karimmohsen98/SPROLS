@@ -47,6 +47,6 @@ public class VerificationEfficacite implements Serializable {
     @Column(nullable = false)
     private String numMatriculeChefInformatique;
 
-    @OneToOne
+    @ManyToOne
     private RealisationIntervention realisationInterventionV;
 }

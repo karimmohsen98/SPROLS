@@ -8,11 +8,13 @@ import sprols.internship.Entities.Approvisionnement;
 import sprols.internship.Entities.Etat;
 import sprols.internship.Entities.Materiel;
 import sprols.internship.Entities.Utilisateur;
+import sprols.internship.InternshipApplication;
 import sprols.internship.Repositories.ApprovisionnementRepository;
 import sprols.internship.Repositories.MaterielRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,15 +25,18 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
     MaterielRepository materielRepository;
 
     @Override
-    public ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule , int idMat) {
-
-        Utilisateur User = utilisateurRepository.findByNumMatricule(numMatricule);
-        Materiel material = materielRepository.findById(idMat).orElse(null);
+    public ResponseEntity<Object> ajoutAppro(Approvisionnement approvisionnement, String numMatricule ,List<Materiel> idMat) {
         List<Materiel> materielList = new ArrayList<>();
-        materielList.add(material);
+        Utilisateur User = utilisateurRepository.findByNumMatricule(numMatricule);
+        for (Materiel materiel : idMat) {
+            Materiel material = materielRepository.findById(materiel.getIdMateriel()).orElse(null);
+            if (materiel!=null){
+                materielList.add(material);
+            }
+        }
 
         Assert.notNull(approvisionnement, "remplire approvionnement");
-        if (User!=null && material!=null) {
+        if (User!=null) {
             approvisionnement.setNumMatriculeD(numMatricule);
             approvisionnement.setEtatApprovisionnement(Etat.ENATTENTE);
             approvisionnement.setUtilisateurAppro(User);

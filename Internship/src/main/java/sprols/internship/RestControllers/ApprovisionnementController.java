@@ -5,7 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sprols.internship.Entities.Approvisionnement;
 import sprols.internship.Entities.Etat;
+import sprols.internship.Entities.Materiel;
 import sprols.internship.Services.IApprovisionementServiceIMP;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/approvisionnement")
@@ -16,7 +19,7 @@ public class ApprovisionnementController {
     @PostMapping("/ajouterappro/{numMatricule}/{idMat}")
     public ResponseEntity<Object> ajouterApp(@RequestBody Approvisionnement approvisionnement
             , @PathVariable String numMatricule
-            , @PathVariable int idMat) {
+            , @PathVariable List<Materiel> idMat) {
         return iApprovisionementServiceIMP.ajoutAppro(approvisionnement, numMatricule, idMat);
     }
 
