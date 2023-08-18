@@ -2,6 +2,7 @@ package sprols.internship.Security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import sprols.internship.Entities.Utilisateur;
+import sprols.internship.Repositories.TokenRepository;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,7 @@ import java.io.IOException;
 public class JWTAuthentificationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
     @Override
     protected void doFilterInternal(HttpServletRequest request
             , HttpServletResponse response
@@ -38,7 +42,10 @@ public class JWTAuthentificationFilter extends OncePerRequestFilter {
         userNumMatricule = jwtService.extractuserNumMatricule(JWT);
         if (userNumMatricule != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userNumMatricule);
-            if (Boolean.TRUE.equals(jwtService.isTokenValid(JWT, (Utilisateur) userDetails))) {
+            var isTokenValide = tokenRepository.findByToken(JWT)
+                    .map(token -> !token.isRevoked() && !token.isExpired())
+                    .orElse(false);
+            if (Boolean.TRUE.equals(jwtService.isTokenValid(JWT, (Utilisateur) userDetails)&& isTokenValide)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
