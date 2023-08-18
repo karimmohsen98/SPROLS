@@ -7,8 +7,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -40,6 +38,7 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
                 .authorizeHttpRequests()
                 .antMatchers("/api/auth/**",
                         "/api/approvisionnement/**",
+                        "/v1/api-docs",
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/configuration/ui",
@@ -85,5 +84,4 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
         }
 
     }
-
 }
