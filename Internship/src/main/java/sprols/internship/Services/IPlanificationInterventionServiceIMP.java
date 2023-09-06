@@ -11,6 +11,8 @@ import sprols.internship.Repositories.DemandeInterventionRepository;
 import sprols.internship.Repositories.PlanificationInterventionRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class IPlanificationInterventionServiceIMP implements PlanificationInterventionService{
@@ -45,5 +47,13 @@ public class IPlanificationInterventionServiceIMP implements PlanificationInterv
     public ResponseEntity<Object> supprimerPlaniInter(int id) {
         planificationInterventionRepository.deleteById(id);
         return ResponseEntity.ok("Planification Intervention supprime");
+    }
+
+    public List<PlanificationIntervention> displayAllPlanifications(){
+        return planificationInterventionRepository.findAll();
+    }
+
+    public List<PlanificationIntervention> findBymatricule(String numMat){
+        return planificationInterventionRepository.findAllByNumMatriculeIntervenant(numMat);
     }
 }

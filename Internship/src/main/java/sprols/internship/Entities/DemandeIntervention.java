@@ -62,7 +62,8 @@ public class DemandeIntervention implements Serializable {
     @ManyToOne
     private Utilisateur utilisateurDemandeInterv;
 
-    @JsonIgnore
+
     @OneToOne(mappedBy = "demandeInterventionPlan")
+    @JsonIgnore
     private PlanificationIntervention planificationIntervention;
 }

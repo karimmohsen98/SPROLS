@@ -41,7 +41,7 @@ public class AuthenticationService {
                 .dateNaissance(registerRequest.getDateNaissance())
                 .prenomUtilisateur(registerRequest.getPrenomUtilisateur())
                 .batiment(registerRequest.getBatiment())
-                .StatusCompte(TRUE)
+                .statusCompte(TRUE)
                 .role(registerRequest.getRole())
                 .soldesConge(30.0)
                 .poste(registerRequest.getPoste())
@@ -88,6 +88,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwt)
                 .refreshToken(refreshToken)
+                .utilisateur(user)
                 .build();
 
     }
@@ -123,7 +124,7 @@ public class AuthenticationService {
                         .refreshToken(refreshToken)
                         .build();
 
-                new ObjectMapper().writeValue(response.getOutputStream(),authResponse);
+                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
     }

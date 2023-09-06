@@ -3,6 +3,7 @@ package sprols.internship.Security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,11 +37,14 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                .cors().and()
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
                 .antMatchers("/api/auth/**",
-                        "/api/approvisionnement/**",
+//                        "/api/materiel/**",
+                        "/api/utilisateur/**",
+//"/api/conge/**",
                         "/v1/api-docs",
                         "/v2/api-docs",
                         "/v3/api-docs",
@@ -52,6 +56,7 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
                         "/swagger-ui.html",
                         "/webjars/**",
                         "/swagger.ui/**")
+
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -76,20 +81,20 @@ public class ConfigSecurite extends SimpleUrlAuthenticationSuccessHandler {
         return new BCryptPasswordEncoder();
     }
 
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws ServletException, IOException {
-
-        String adminHome = "/adminHome";
-        String userHome = "/userHome";
-
-        Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-
-        if (authorities.contains("user")) {
-            getRedirectStrategy().sendRedirect(request, response, userHome);
-        } else if (authorities.contains("admin")) {
-            getRedirectStrategy().sendRedirect(request, response, adminHome);
-
-        }
-
-    }
+//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+//                                        Authentication authentication) throws ServletException, IOException {
+//
+//        String adminHome = "/adminHome";
+//        String userHome = "/userHome";
+//
+//        Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+//
+//        if (authorities.contains("user")) {
+//            getRedirectStrategy().sendRedirect(request, response, userHome);
+//        } else if (authorities.contains("admin")) {
+//            getRedirectStrategy().sendRedirect(request, response, adminHome);
+//
+//        }
+//
+//    }
 }

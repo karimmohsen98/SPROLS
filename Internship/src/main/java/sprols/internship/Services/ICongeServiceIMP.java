@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import sprols.internship.Entities.Conge;
 import sprols.internship.Entities.Etat;
+import sprols.internship.Entities.TypeConge;
 import sprols.internship.Entities.Utilisateur;
 import sprols.internship.Repositories.CongeRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
@@ -30,8 +31,6 @@ public class ICongeServiceIMP implements CongeService {
     private final ModifierEtatGeneric modifierEtatGeneric;
 
    // private List<Utilisateur> users = new ArrayList<>(); // Simulated list of users
-
-
     @Override
     public ResponseEntity<Object> ajoutConge(Conge conge, String numMatriculeD, String numMatriculeR) {
         Utilisateur userD = utilisateurRepository.findByNumMatricule(numMatriculeD);
@@ -46,6 +45,7 @@ public class ICongeServiceIMP implements CongeService {
             conge.setUtilisateurConge(userD);
             conge.setEtatConge(Etat.ENATTENTE);
             conge.setTraite(false);
+            conge.setTypeConge(TypeConge.CONGEANNUEL);
             conge.setNumMatriculeD(userD.getNumMatricule());
             conge.setNumMatriculeR(userR.getNumMatricule());
             congeRepository.save(conge);
@@ -60,17 +60,27 @@ public class ICongeServiceIMP implements CongeService {
 
     }
 
-    @Override
-    public ResponseEntity<Object> modifierEtatConge(int idConge, Etat etat) {
+//    @Override
+    public ResponseEntity<Object> modifierEtatConge(int idConge,Conge conge) {
         Conge congeFind = congeRepository.findById(idConge).orElse(null);
-        modifierEtatGeneric.modifyEtat(
-                idConge,
-                congeRepository,
-                etat,
-                conge -> conge.setEtatConge(etat),
-                "conge n'existe pas."
-        );
+//        modifierEtatGeneric.modifyEtat(
+//                idConge,
+//                congeRepository,
+//                etat,
+//                conge -> conge.setEtatConge(etat),
+//                "conge n'existe pas."
+//        );
         assert congeFind != null;
+        congeFind.setNumMatriculeR(conge.getNumMatriculeR());
+        congeFind.setDateDebut(conge.getDateDebut());
+        congeFind.setDateFin(conge.getDateFin());
+        congeFind.setNombreJours(conge.getNombreJours());
+        congeFind.setAddressDurantConge(conge.getAddressDurantConge());
+        congeFind.setEtatConge(conge.getEtatConge());
+
+        congeRepository.save(congeFind);
+
+
         if (congeFind.getEtatConge() == Etat.ACCEPTER && Boolean.TRUE.equals(!congeFind.getTraite())) {
             Utilisateur user = utilisateurRepository.findByNumMatricule(congeFind.getNumMatriculeD());
             int nbrJours = congeFind.getNombreJours();
@@ -98,9 +108,18 @@ public class ICongeServiceIMP implements CongeService {
     }
 
     @Override
-    public ResponseEntity<Object> afficherlisteconge(String numMatD) {
-        return ResponseEntity.ok(congeRepository.findAllByNumMatriculeD(numMatD));
+    public List<Conge> afficherlisteconge(String numMatD) {
+        return congeRepository.findAllByNumMatriculeD(numMatD);
 
+    }
+    @Override
+    public List<Conge> afficherCongeToututilisateur(){
+        return congeRepository.findAll();
+    }
+
+    @Override
+    public Conge afficherCongeParId(int idConge){
+        return congeRepository.findById(idConge).orElse(null);
     }
 
     @Transactional
@@ -115,8 +134,7 @@ public class ICongeServiceIMP implements CongeService {
 
     }
 
-
-    // Simulate loading users (you can load users from a database)
+// Simulate loading users (you can load users from a database)
 //    public void LeaveBalanceService() {
 //        users = utilisateurRepository.findAll();
 //    }

@@ -1,5 +1,6 @@
 package sprols.internship.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Utilisateur implements  UserDetails {
+public class Utilisateur implements Serializable,UserDetails {
 
        @Id
        @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +46,8 @@ public class Utilisateur implements  UserDetails {
        private LocalDate dateNaissance;
 
        @NotNull
-       @Column(name = "StatusCompte",nullable = false)
-       private boolean StatusCompte;
+       @Column(name = "statusCompte",nullable = false)
+       private boolean statusCompte;
 
        @NotNull
        @Column(nullable = false)
@@ -79,6 +80,7 @@ public class Utilisateur implements  UserDetails {
        @Enumerated(EnumType.STRING)
        private Role role;
 
+       @JsonIgnore
        @OneToMany(mappedBy = "user")
        private List<Token> token;
 
@@ -93,6 +95,7 @@ public class Utilisateur implements  UserDetails {
 
 
        @Override
+       @JsonIgnore
        public Collection<? extends GrantedAuthority> getAuthorities() {
               return role.getGrantedAuthorities();
        }

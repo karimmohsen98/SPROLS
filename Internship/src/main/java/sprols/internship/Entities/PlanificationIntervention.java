@@ -2,10 +2,8 @@ package sprols.internship.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -20,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class PlanificationIntervention implements Serializable {
 
     @Id
@@ -37,8 +36,14 @@ public class PlanificationIntervention implements Serializable {
     private LocalDate dateIntervention;
 
     @OneToOne
+    @JoinColumn(unique = true)
     private DemandeIntervention demandeInterventionPlan;
 
+    @JsonProperty("demandeInterventionPlan")
+    private void unpackNested(Integer demandeInterventionPlanId) {
+        this.demandeInterventionPlan = new DemandeIntervention();
+        demandeInterventionPlan.setIdDemandeIntervention(demandeInterventionPlanId);
+    }
     @OneToMany(mappedBy = "planificationInterventionR")
     @JsonIgnore
     private List<RealisationIntervention> realisationIntervention;

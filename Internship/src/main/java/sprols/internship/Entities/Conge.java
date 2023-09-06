@@ -24,7 +24,7 @@ public class Conge implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private LocalDate dateDebut;
+        private LocalDate dateDebut;
 
     @NotNull
     @Column(nullable = false)

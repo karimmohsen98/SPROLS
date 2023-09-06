@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import sprols.internship.Entities.Materiel;
 import sprols.internship.Repositories.MaterielRepository;
 
+import java.util.Collections;
+import java.util.List;
+
 @AllArgsConstructor
 @Service
 public class IMaterielServiceIMP implements MaterielService{
@@ -17,8 +20,12 @@ public class IMaterielServiceIMP implements MaterielService{
     }
 
     @Override
-    public ResponseEntity<Object> modifierMat(Materiel materiel) {
-        materielRepository.save(materiel);
+    public ResponseEntity<Object> modifierMat(Integer id,Materiel materiel) {
+        Materiel materielToUpdate  = materielRepository.findById(id).orElse(null);
+        if (materielToUpdate != null) {
+            materielToUpdate.setNomMateriel(materiel.getNomMateriel());
+            }
+        materielRepository.save(materielToUpdate);
         return ResponseEntity.ok(materiel);
     }
 
@@ -26,4 +33,7 @@ public class IMaterielServiceIMP implements MaterielService{
     public void supprimerMat(Integer idMateriel) {
         materielRepository.deleteById(idMateriel);
     }
+
+    public List<Materiel> afficherToutMat(){
+        return materielRepository.findAll();    }
 }

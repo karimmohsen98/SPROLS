@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CongeRepository extends JpaRepository<Conge, Integer> {
     List<Conge> findAllByNumMatriculeD(String numMatricule);
+
 }

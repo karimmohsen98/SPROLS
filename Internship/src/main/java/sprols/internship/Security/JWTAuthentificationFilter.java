@@ -26,12 +26,11 @@ public class JWTAuthentificationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
-    @Override
-    protected void doFilterInternal(HttpServletRequest request
-            , HttpServletResponse response
-            , FilterChain filterChain) throws ServletException, IOException {
 
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
+        log.info("authHeader: {}", authHeader);
         final String JWT;
         final String userNumMatricule;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -42,22 +41,13 @@ public class JWTAuthentificationFilter extends OncePerRequestFilter {
         userNumMatricule = jwtService.extractuserNumMatricule(JWT);
         if (userNumMatricule != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userNumMatricule);
-            var isTokenValide = tokenRepository.findByToken(JWT)
-                    .map(token -> !token.isRevoked() && !token.isExpired())
-                    .orElse(false);
-            if (Boolean.TRUE.equals(jwtService.isTokenValid(JWT, (Utilisateur) userDetails)&& isTokenValide)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+            var isTokenValide = tokenRepository.findByToken(JWT).map(token -> !token.isRevoked() && !token.isExpired()).orElse(false);
+            if (Boolean.TRUE.equals(jwtService.isTokenValid(JWT, (Utilisateur) userDetails) && isTokenValide)) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         filterChain.doFilter(request, response);
-
     }
 }

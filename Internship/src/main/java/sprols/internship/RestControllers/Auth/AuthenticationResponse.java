@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sprols.internship.Entities.Utilisateur;
 
 @Data
 @Builder
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
     @JsonProperty("access_token")
     private String accessToken;
+
+    private Utilisateur utilisateur;
 
     @JsonProperty("refresh_token")
     private String refreshToken;

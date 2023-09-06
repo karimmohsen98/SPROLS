@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/approvisionnement")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class ApprovisionnementController {
     private final IApprovisionementServiceIMP iApprovisionementServiceIMP;
 
