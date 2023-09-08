@@ -2,6 +2,7 @@ package sprols.internship.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,18 +44,32 @@ public class RealisationIntervention implements Serializable {
     private LocalDate dateConstatDiagnostic;
 
     @NotNull
-    @Column(nullable = false)
-    private LocalDate dateIntervention;
+    @Column()
+    private String typeDefaut;
 
+    @NotNull
+    @Column()
+    private String descriptionConstatDiagnostic;
 
+    @NotNull
+    @Column()
+    private String descriptionIntervention;
+
+    @Enumerated(EnumType.STRING)
     @Column
     private Frequence frequence;
 
 
     @Column()
+    @Enumerated(EnumType.STRING)
     private Origine origine;
 
-    @JsonIgnore
+    @JsonProperty("planificationInterventionR")
+    private void unpackNested(Integer planificationInterventionId) {
+        this.planificationInterventionR = new PlanificationIntervention();
+        planificationInterventionR.setIdPlanification(planificationInterventionId);
+    }
+
     @ManyToOne
     private PlanificationIntervention planificationInterventionR;
 

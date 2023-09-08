@@ -11,6 +11,8 @@ import sprols.internship.Repositories.PlanificationInterventionRepository;
 import sprols.internship.Repositories.RealisationInterventionRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class IRealisationInterventionServiceIMP implements RealisationInterventionService{
@@ -32,14 +34,38 @@ public class IRealisationInterventionServiceIMP implements RealisationInterventi
     }
 
     @Override
-    public ResponseEntity<Object> modifierRealiInterv(RealisationIntervention realisationIntervention) {
-        realisationInterventionRepository.save(realisationIntervention);
-        return ResponseEntity.ok(realisationIntervention);
+    public ResponseEntity<Object> modifierRealiInterv(int idRealisation,RealisationIntervention realisationIntervention) {
+       RealisationIntervention  existingRealisation = realisationInterventionRepository.findById(idRealisation).orElse(null);
+       if (existingRealisation!=null){
+           existingRealisation.setNumMatriculeIntervenant(realisationIntervention.getNumMatriculeIntervenant());
+           existingRealisation.setPlanificationInterventionR(realisationIntervention.getPlanificationInterventionR());
+           existingRealisation.setDateRealisationIntervention(realisationIntervention.getDateRealisationIntervention());
+           existingRealisation.setFrequence(realisationIntervention.getFrequence());
+           existingRealisation.setOrigine(realisationIntervention.getOrigine());
+           existingRealisation.setDescriptionIntervention(realisationIntervention.getDescriptionIntervention());
+           existingRealisation.setDescriptionConstatDiagnostic(realisationIntervention.getDescriptionConstatDiagnostic());
+           existingRealisation.setTypeDefaut(realisationIntervention.getTypeDefaut());
+           existingRealisation.setTypeInternvetion(realisationIntervention.getTypeInternvetion());
+           existingRealisation.setDateConstatDiagnostic(realisationIntervention.getDateConstatDiagnostic());
+
+           realisationInterventionRepository.save(existingRealisation);
+       }
+        return ResponseEntity.ok(existingRealisation);
     }
 
     @Override
     public ResponseEntity<Object> supprimerRealiInter(int id) {
         realisationInterventionRepository.deleteById(id);
         return ResponseEntity.ok("Realisation Intervention supprime");
+    }
+    public List<RealisationIntervention> getAllRealisationIntervention(){
+        return realisationInterventionRepository.findAll();
+    }
+    public List<RealisationIntervention> getAllRealisationInterventionByMatricule(String matricule){
+        return realisationInterventionRepository.findAllByNumMatriculeIntervenant(matricule);
+    }
+
+    public RealisationIntervention getRealisationInterventionById(int id){
+        return realisationInterventionRepository.findById(id).orElse(null);
     }
 }

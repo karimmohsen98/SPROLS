@@ -74,24 +74,30 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse authenticate(AuthenticateRequest authenticateRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticateRequest.getNumMatricule(),
-                        authenticateRequest.getPassword()
-                )
-        );
-        var user = utilisateurRepository.findByNumMatricule(authenticateRequest.getNumMatricule());
-        var jwt = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwt);
-        return AuthenticationResponse.builder()
-                .accessToken(jwt)
-                .refreshToken(refreshToken)
-                .utilisateur(user)
-                .build();
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticateRequest.getNumMatricule(),
+                            authenticateRequest.getPassword()
 
-    }
+                    )
+            );
+            var user = utilisateurRepository.findByNumMatricule(authenticateRequest.getNumMatricule());
+            if (user.isStatusCompte()) {
+                var jwt = jwtService.generateToken(user);
+                var refreshToken = jwtService.generateRefreshToken(user);
+                revokeAllUserTokens(user);
+                saveUserToken(user, jwt);
+                return AuthenticationResponse.builder()
+                        .accessToken(jwt)
+                        .refreshToken(refreshToken)
+                        .utilisateur(user)
+                        .build();
+
+            } else {
+                return null;
+            }
+        }
+
 
     private void saveUserToken(Utilisateur user, String jwt) {
         var token = Token.builder()

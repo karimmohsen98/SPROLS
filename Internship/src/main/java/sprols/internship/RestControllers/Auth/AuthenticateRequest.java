@@ -14,4 +14,6 @@ public class AuthenticateRequest {
 
     private String numMatricule;
     private String password;
+    private boolean StatusCompte;
+
 }

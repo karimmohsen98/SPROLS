@@ -44,6 +44,7 @@ public class PlanificationIntervention implements Serializable {
         this.demandeInterventionPlan = new DemandeIntervention();
         demandeInterventionPlan.setIdDemandeIntervention(demandeInterventionPlanId);
     }
+
     @OneToMany(mappedBy = "planificationInterventionR")
     @JsonIgnore
     private List<RealisationIntervention> realisationIntervention;

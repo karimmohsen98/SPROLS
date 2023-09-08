@@ -21,24 +21,32 @@ public class PlanificationInterventionController {
     public ResponseEntity<Object> ajoutPlaniInterv(@RequestBody PlanificationIntervention planificationIntervention
             , @PathVariable int idDemandeInterv
             , @PathVariable String matriculeIntervenant) {
-        return iPlanificationInterventionServiceIMP.ajoutPlaniInterv(planificationIntervention, idDemandeInterv,matriculeIntervenant);
+        return iPlanificationInterventionServiceIMP.ajoutPlaniInterv(planificationIntervention, idDemandeInterv, matriculeIntervenant);
     }
 
-    @PutMapping("/modifierplanificationintervention")
-    public ResponseEntity<Object> modifierPlaniInterv(@RequestBody PlanificationIntervention planificationIntervention) {
-        return iPlanificationInterventionServiceIMP.modifierPlaniInterv(planificationIntervention);
+    @PutMapping("/modifierplanificationintervention/{idPla}")
+    public ResponseEntity<Object> modifierPlaniInterv(@PathVariable int idPla,@RequestBody PlanificationIntervention planificationIntervention) {
+        return iPlanificationInterventionServiceIMP.modifierPlaniInterv(idPla,planificationIntervention);
 
     }
+
     @DeleteMapping("/supprimerplanificationintervention/{id}")
     public ResponseEntity<Object> supprimerPlaniInter(@PathVariable int id) {
         return iPlanificationInterventionServiceIMP.supprimerPlaniInter(id);
     }
+
     @GetMapping("/affichertoutplanification")
-    public List<PlanificationIntervention> displayAllPlanifications(){
+    public List<PlanificationIntervention> displayAllPlanifications() {
         return iPlanificationInterventionServiceIMP.displayAllPlanifications();
     }
+
     @GetMapping("/afficherplanificationinterventionliste/{numMat}")
-    public List<PlanificationIntervention> displayAllByMatricule(@PathVariable String numMat){
+    public List<PlanificationIntervention> displayAllByMatricule(@PathVariable String numMat) {
         return iPlanificationInterventionServiceIMP.findBymatricule(numMat);
+    }
+
+    @GetMapping("/afficherplanificationintervention/{idPlanification}")
+    public PlanificationIntervention findByIdPlanification(@PathVariable int idPlanification) {
+        return iPlanificationInterventionServiceIMP.findByIdPlanification(idPlanification);
     }
 }

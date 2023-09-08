@@ -27,21 +27,34 @@ public class IPlanificationInterventionServiceIMP implements PlanificationInterv
         Utilisateur user = utilisateurRepository.findByNumMatricule(matriculeIntervenant);
         DemandeIntervention demandeIntervention = demandeInterventionRepository.findById(idDemandeInterv).orElse(null);
 
-            if (user != null && demandeIntervention != null && (demandeIntervention.getEtatDemandeIntervention().equals(Etat.ACCEPTER))) {
-                    planificationIntervention.setNumMatriculeIntervenant(matriculeIntervenant);
-                    planificationIntervention.setDemandeInterventionPlan(demandeIntervention);
-                    planificationInterventionRepository.save(planificationIntervention);
-                    return ResponseEntity.ok(planificationIntervention);
-
-
+        if (user != null && demandeIntervention != null && (demandeIntervention.getEtatDemandeIntervention().equals(Etat.ACCEPTER))) {
+            PlanificationIntervention existingPlanification = planificationInterventionRepository.findByDemandeInterventionPlan(demandeIntervention);
+            if (existingPlanification == null) {
+                planificationIntervention.setNumMatriculeIntervenant(matriculeIntervenant);
+                planificationIntervention.setDemandeInterventionPlan(demandeIntervention);
+                planificationInterventionRepository.save(planificationIntervention);
+                return ResponseEntity.ok(planificationIntervention);
+            } else {
+                return ResponseEntity.badRequest().body("Demande Intervention n'existe pas ou n'est pas accepter");
             }
-            return ResponseEntity.badRequest().body("Demande Intervention n'existe pas ou n'est pas accepter");
         }
+        return ResponseEntity.badRequest().body("Intervenant n'existe pas");
+    }
     @Override
-    public ResponseEntity<Object> modifierPlaniInterv(PlanificationIntervention planificationIntervention) {
-        planificationInterventionRepository.save(planificationIntervention);
-        return ResponseEntity.ok(planificationIntervention);
+    public ResponseEntity<Object> modifierPlaniInterv(int idPlani,PlanificationIntervention planificationIntervention) {
 
+        PlanificationIntervention existingPlanification = planificationInterventionRepository.findById(idPlani).orElse(null);
+        if (existingPlanification !=null) {
+            existingPlanification.setNumMatriculeIntervenant(planificationIntervention.getNumMatriculeIntervenant());
+            existingPlanification.setPhases(planificationIntervention.getPhases());
+            existingPlanification.setDateIntervention(planificationIntervention.getDateIntervention());
+            existingPlanification.setDemandeInterventionPlan(planificationIntervention.getDemandeInterventionPlan());
+
+            planificationInterventionRepository.save(existingPlanification);
+
+
+        }
+        return ResponseEntity.ok(planificationIntervention);
     }
     @Override
     public ResponseEntity<Object> supprimerPlaniInter(int id) {
@@ -55,5 +68,8 @@ public class IPlanificationInterventionServiceIMP implements PlanificationInterv
 
     public List<PlanificationIntervention> findBymatricule(String numMat){
         return planificationInterventionRepository.findAllByNumMatriculeIntervenant(numMat);
+    }
+    public PlanificationIntervention findByIdPlanification(int idPlanification){
+        return planificationInterventionRepository.findByIdPlanification(idPlanification);
     }
 }
