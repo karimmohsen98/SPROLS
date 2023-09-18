@@ -32,14 +32,6 @@ public class Approvisionnement implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private int quantiteDemande;
-
-    @NotNull
-    @Column(nullable = false)
-    private int quantiteLivre;
-
-    @NotNull
-    @Column(nullable = false)
     private LocalDate dateDemandeApprovisionnement;
 
     @NotNull
@@ -51,7 +43,7 @@ public class Approvisionnement implements Serializable {
     @JsonIgnore
     private Utilisateur utilisateurAppro;
 
-    @ManyToMany
+    @OneToOne
     @JsonIgnore
-    List<Materiel> materielList;
+    private ListeDesMateriel listeDesMateriel;
 }

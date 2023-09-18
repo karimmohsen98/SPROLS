@@ -10,6 +10,8 @@ import sprols.internship.Repositories.RealisationInterventionRepository;
 import sprols.internship.Repositories.UtilisateurRepository;
 import sprols.internship.Repositories.VerificationEfficaciteRepository;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class IVerificationEfficaciteServiceIMP implements VerificationEfficaciteService{
@@ -20,21 +22,44 @@ public class IVerificationEfficaciteServiceIMP implements VerificationEfficacite
     @Override
     public ResponseEntity<Object> ajoutVerifEffi(VerificationEfficacite verificationEfficacite
             , String numMatriculeD
-            , String numMatriculeChefInfo
             , int idRealisationIntervention) {
         RealisationIntervention realisationIntervention = realisationInterventionRepository.findById(idRealisationIntervention).orElse(null);
         Utilisateur userD = utilisateurRepository.findByNumMatricule(numMatriculeD);
-        Utilisateur userChef = utilisateurRepository.findByNumMatricule(numMatriculeChefInfo);
 
-        if(userD!=null && userChef!=null && realisationIntervention!=null){
+        if(userD!=null && realisationIntervention!=null){
 
             verificationEfficacite.setRealisationInterventionV(realisationIntervention);
             verificationEfficacite.setNumMatriculeDemandeur(numMatriculeD);
-            verificationEfficacite.setNumMatriculeChefInformatique(numMatriculeChefInfo);
             verificationEfficaciteRepository.save(verificationEfficacite);
             return ResponseEntity.ok(verificationEfficacite);
 
         }
          return ResponseEntity.badRequest().body("Demandeur ou chef informatique n'existe pas.");
     }
-}
+
+    public ResponseEntity<Object> modifierverification(int idVerif,VerificationEfficacite verificationEfficacite){
+        VerificationEfficacite existingVerif = verificationEfficaciteRepository.findById(idVerif).orElse(null);
+        if (existingVerif!=null){
+            existingVerif.setAvisDemandeurVerification(verificationEfficacite.getAvisDemandeurVerification());
+            existingVerif.setAvisChefInformatique(verificationEfficacite.getAvisChefInformatique());
+            existingVerif.setNumMatriculeChefInformatique(verificationEfficacite.getNumMatriculeChefInformatique());
+            existingVerif.setDateAvisChefInformatique(verificationEfficacite.getDateAvisChefInformatique());
+            existingVerif.setDateAvisDemandeur(verificationEfficacite.getDateAvisDemandeur());
+            existingVerif.setNumMatriculeDemandeur(verificationEfficacite.getNumMatriculeDemandeur());
+
+            verificationEfficaciteRepository.save(existingVerif);
+        }
+        return ResponseEntity.ok(existingVerif);
+
+    }
+
+    public List<VerificationEfficacite> getAllVerifEfficacite(){
+        return verificationEfficaciteRepository.findAll();
+    }
+
+    public List<VerificationEfficacite> findRealisationParId(String numMatriculeDemandeur){
+        return verificationEfficaciteRepository.findAllByNumMatriculeDemandeur(numMatriculeDemandeur);
+    }
+    public VerificationEfficacite findVerificationParId(int idVerif){
+        return verificationEfficaciteRepository.findById(idVerif).orElse(null);
+    }}

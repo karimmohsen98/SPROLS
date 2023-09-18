@@ -40,7 +40,6 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
             approvisionnement.setNumMatriculeD(numMatricule);
             approvisionnement.setEtatApprovisionnement(Etat.ENATTENTE);
             approvisionnement.setUtilisateurAppro(User);
-            approvisionnement.setMaterielList(materielList);
         }
         approvisionnementRepository.save(approvisionnement);
         return ResponseEntity.ok(approvisionnement);
@@ -57,7 +56,6 @@ public class IApprovisionementServiceIMP implements ApprovisionnementService{
     public ResponseEntity<Object> modifierQuantiteLivre(int idApprovisionnement, int quantiteLivre) {
         Approvisionnement approvisionnement = approvisionnementRepository.findById(idApprovisionnement).orElse(null);
           if (approvisionnement!=null && approvisionnement.getEtatApprovisionnement().equals(Etat.ACCEPTER)){
-                approvisionnement.setQuantiteLivre(quantiteLivre);
                 approvisionnementRepository.save(approvisionnement);
             } else {
               return ResponseEntity.badRequest().body("approvisionnement n'existe pas ou n'est pas accepter");}

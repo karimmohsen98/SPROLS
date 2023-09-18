@@ -7,6 +7,6 @@ import sprols.internship.Entities.VerificationEfficacite;
 
 public interface VerificationEfficaciteService {
 
-    ResponseEntity<Object> ajoutVerifEffi(VerificationEfficacite verificationEfficacite, String numMatriculeD,String numMatriculeChefInfo,int idRealisationIntervention);
+    ResponseEntity<Object> ajoutVerifEffi(VerificationEfficacite verificationEfficacite, String numMatriculeD,int idRealisationIntervention);
 
 }

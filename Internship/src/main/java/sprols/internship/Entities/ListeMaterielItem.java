@@ -6,23 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Materiel implements Serializable{
-
+public class ListeMaterielItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMateriel;
+    private int idListeMaterielItem;
+    private int quantiteDemande;
+    private int quantiteApprovisionne;
 
-    @NotNull
-    @Column(nullable = false)
-    private String nomMateriel;
+    @ManyToOne
+    private ListeDesMateriel listeMats;
 
+    @ManyToOne
+    private Materiel listeDesMateriel;
 }

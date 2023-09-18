@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,14 +15,13 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Materiel implements Serializable{
-
+public class ListeDesMateriel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMateriel;
-
-    @NotNull
-    @Column(nullable = false)
-    private String nomMateriel;
+    private int idListeMateriel;
+    @OneToMany(mappedBy = "listeDesMateriel")
+    private List<ListeMaterielItem> listeMaterielItemList = new ArrayList<>();
+    @OneToMany(mappedBy = "listeMats")
+    private List<ListeMaterielItem> listeMaterielItemApprovisionneList;
 
 }

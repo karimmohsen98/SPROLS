@@ -1,5 +1,6 @@
 package sprols.internship.Entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,31 +22,31 @@ public class VerificationEfficacite implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idVerification;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String avisDemandeurVerification;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String numMatriculeDemandeur;
 
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate dateAvisDemandeur;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String avisChefInformatique;
 
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDate dateAvisChefInformatique;
 
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String numMatriculeChefInformatique;
+
+    @JsonProperty("realisationInterventionV")
+    private void unpackNested(Integer realisationInterventionId) {
+        this.realisationInterventionV = new RealisationIntervention();
+        realisationInterventionV.setIdRealisationIntervnetion(realisationInterventionId);
+    }
 
     @ManyToOne
     private RealisationIntervention realisationInterventionV;
